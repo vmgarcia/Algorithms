@@ -2,6 +2,10 @@ import unittest
 from collections import defaultdict
 from heapq import *
 
+"""
+Time complexity: O((E+V)LogV)
+Space complexity: O(V)
+"""
 def dijkstra(edges, f, t):
   graph = defaultdict(list)
   for (u, v, w) in edges:
@@ -34,7 +38,7 @@ def dijkstra(edges, f, t):
       current = parents[current]
     path.reverse()
     return min_distances[t], path
-    
+
   return float("inf"), None
 
 class TestDijkstras(unittest.TestCase):
