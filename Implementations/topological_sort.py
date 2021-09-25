@@ -30,6 +30,8 @@ def topological_sort(edges):
       if in_degree[neighbor] == 0:
         q.append(neighbor)
     visited_count += 1
+  if visited_count != len(graph.keys()):
+    return []
   return sorted_nodes
 
 
@@ -46,5 +48,9 @@ class TestTopologicalSort(unittest.TestCase):
   def test_bigger_dag(self):
     edges = [[5, 0], [4, 0], [4, 1], [1, 3], [2, 3], [5, 2]]
     self.assertEqual(topological_sort(edges), [5, 4, 2, 0, 1, 3])
+
+  def test_cycle_detection(self):
+    edges = [[0, 1], [1, 0], [1, 2]]
+    self.assertEqual(topological_sort(edges), [])
 if __name__ == '__main__':
   unittest.main()
