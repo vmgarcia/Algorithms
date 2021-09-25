@@ -7,29 +7,30 @@ Space complexity: O(V)
 """
 def bellman_ford(graph, source):
     # Step 1: Prepare the distance and predecessor for each node
-    distances = [{}, {}]
+    previous = {}
+    current = {}
     predecessor = {}
     for node in graph:
-      distances[0][node], distances[1][node] = float('inf'), float('inf')
+      previous[node], current[node] = float('inf'), float('inf')
       predecessor[node] = None
 
-    distances[0][source] = 0
-    distances[1][source] = 0
-
+    previous[source] = 0
+    current[source] = 0
     # Step 2: Relax the edges
-    for i in range(len(graph) - 1):
+    for i_ in range(len(graph) - 1):
         for node in graph:
             for weight, neighbour in graph[node]:
                 # If the distance between the node and the neighbour is lower than the current, store it
-                if distances[i%2][neighbour] > distances[1-i%2][node] + weight:
-                    distances[i%2][neighbour], predecessor[neighbour] = distances[1-i%2][node] + weight, node
+                if current[neighbour] > previous[node] + weight:
+                    current[neighbour], predecessor[neighbour] = previous[node] + weight, node
+        current, previous = previous, current
 
     # Step 3: Check for negative weight cycles
     for node in graph:
         for weight, neighbour in graph[node]:
-            assert distances[1-len(graph)%2][neighbour] <= distances[1-len(graph)%2][node] + weight, "Negative weight cycle."
+            assert current[neighbour] <= current[node] + weight, "Negative weight cycle."
  
-    return distances[1-len(graph)%2], predecessor
+    return current, predecessor
 
 class TestBellmanFord(unittest.TestCase):
   def test_bellman_ford(self):
