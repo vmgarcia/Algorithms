@@ -8,8 +8,9 @@ class DisjointSet:
       self.add_many(keys)
 
   def add(self, key):
-    self.ranks[key] = 0
-    self.parents[key] = key
+    if key not in self.parents:
+      self.ranks[key] = 0
+      self.parents[key] = key
   
   def add_many(self, keys):
     for key in keys:
@@ -25,7 +26,7 @@ class DisjointSet:
       root2, rank2 = self.find_root(key2), self.ranks[key2]
 
       if root1 == root2:
-        return
+        return False
 
       if rank1 < rank2:
         self.parents[root1] = root2
@@ -34,7 +35,8 @@ class DisjointSet:
       else:
         self.parents[root2] = root1
         self.ranks[root1] += 1
-    
+      return True
+      
   def connected(self, key1, key2):
     return self.find_root(key1) == self.find_root(key2)
 
