@@ -17,7 +17,7 @@ def bellman_ford(graph, source):
     previous[source] = 0
     current[source] = 0
     # Step 2: Relax the edges
-    for i_ in range(len(graph) - 1):
+    for _ in range(len(graph) - 1):
         for node in graph:
             for weight, neighbour in graph[node]:
                 # If the distance between the node and the neighbour is lower than the current, store it
