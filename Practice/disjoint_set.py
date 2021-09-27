@@ -15,10 +15,9 @@ class DisjointSet:
 
   def union(self, key1, key2):
     pass
-    
+
   def connected(self, key1, key2):
     pass
-
 
 class TestDisjointSet(unittest.TestCase):
 
@@ -29,7 +28,7 @@ class TestDisjointSet(unittest.TestCase):
     disjoint_set.union('a4', 'a1')
     self.assertTrue(disjoint_set.connected('a4', 'a3'))
     self.assertTrue(disjoint_set.connected('a2', 'a1'))
-    self.assertEqual(disjoint_set.ranks['a1'], 2)
+    self.assertEqual(disjoint_set.ranks['a1'], 1)
     self.assertEqual(disjoint_set.parents['a3'], 'a1')
   
   def test_different_components(self):

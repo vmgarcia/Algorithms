@@ -22,8 +22,10 @@ class DisjointSet:
     return self.parents[key]
 
   def union(self, key1, key2):
-      root1, rank1 = self.find_root(key1), self.ranks[key1]
-      root2, rank2 = self.find_root(key2), self.ranks[key2]
+      root1 = self.find_root(key1)
+      rank1 = self.ranks[root1]
+      root2 = self.find_root(key2)
+      rank2 = self.ranks[root2]
 
       if root1 == root2:
         return False
@@ -36,7 +38,7 @@ class DisjointSet:
         self.parents[root2] = root1
         self.ranks[root1] += 1
       return True
-      
+
   def connected(self, key1, key2):
     return self.find_root(key1) == self.find_root(key2)
 
@@ -49,7 +51,7 @@ class TestDisjointSet(unittest.TestCase):
     disjoint_set.union('a4', 'a1')
     self.assertTrue(disjoint_set.connected('a4', 'a3'))
     self.assertTrue(disjoint_set.connected('a2', 'a1'))
-    self.assertEqual(disjoint_set.ranks['a1'], 2)
+    self.assertEqual(disjoint_set.ranks['a1'], 1)
     self.assertEqual(disjoint_set.parents['a3'], 'a1')
   
   def test_different_components(self):
